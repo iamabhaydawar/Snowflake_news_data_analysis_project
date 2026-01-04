@@ -1,32 +1,37 @@
--- Create database for news API data
+--create database for news API data
 CREATE DATABASE news_api;
 
--- Switch to the news_api database
-USE news_api;
+use news_api;
 
--- Create file format for parquet
-CREATE FILE FORMAT parquet_format TYPE=parquet;
 
--- Create storage integration to connect with Google Cloud Storage
+--Create storage integration to connect with Google Cloud Storage
 CREATE OR REPLACE STORAGE INTEGRATION news_data_gcs_integration
 TYPE = EXTERNAL_STAGE
 STORAGE_PROVIDER = GCS
 ENABLED = TRUE
-STORAGE_ALLOWED_LOCATIONS = ('gcs://snowflake-projects-test-gds/news_data_analysis/')
-;
+STORAGE_ALLOWED_LOCATIONS =('gcs://snowflake-projects-test-gds-bucket/news_data_analysis/')
 
--- Display storage integration details
-DESC INTEGRATION news_data_gcs_integration;
+--describe storage integration details
+DESC INTEGRATION news_data_gcs_integration 
 
--- Create external stage pointing to GCS location
+--service account info for storage integration
+-- k98530000@gcpuscentral1-1dfa.iam.gserviceaccount.com
+-- -- snowflake_role
+-- storage.buckets.list
+-- storage.objects.get
+-- storage.objects.list
+
+-- create external stage pointing to gcs bucket location 
 CREATE OR REPLACE STAGE gcs_raw_data_stage
-URL = 'gcs://snowflake-projects-test-gds/news_data_analysis/'
-STORAGE_INTEGRATION = news_data_gcs_integration
-FILE_FORMAT = (TYPE = 'PARQUET')
-; 
+URL='gcs://snowflake-projects-test-gds-bucket/news_data_analysis/'
+STORAGE_INTEGRATION = news_data_gcs_integration 
+FILE_FORMAT=(TYPE = 'PARQUET')
 
--- List all stages in current database
-show stages;
 
--- Query news data ordered by title
-select * from news_api_data order by "newsTitle";
+-- Create file format for parquet
+CREATE FILE FORMAT parquet_format TYPE=parquet;
+
+
+select count(*) from news_api_data
+
+select * from summary_news
