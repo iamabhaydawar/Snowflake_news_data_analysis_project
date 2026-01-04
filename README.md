@@ -339,5 +339,5 @@ For questions or issues:
 
 **📰 News Data Analysis - Automated News Intelligence Pipeline**
 
-**📅 Last Updated:** October 2025  
+**📅 Last Updated:** January 2026  
 **🔧 Built with:** NewsAPI, Apache Airflow, Google Cloud Storage, Snowflake, Python
