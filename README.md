@@ -1,3 +1,5 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 # 📰 News Data Analysis Project
 
 ## 📋 Project Overview
